@@ -19,8 +19,8 @@ public class InvoiceBn extends Bean implements InvoiceInt {
 
     @Override
     public Invoice getInvoiceByNumber(int invoiceNumber) {
-        String sqlStatement = "Select invoice from Invoice invoice where invoice.invoiceNo="+invoiceNumber;
-        List<Invoice> invoice = entityManager.createQuery(sqlStatement).getResultList();
+
+        List<Invoice> invoice = entityManager.createNamedQuery("selectInvoicebyInvoiceNo").setParameter("invoiceNo", String.valueOf(invoiceNumber)).getResultList();
         if(invoice!=null && invoice.size() > 0) return invoice.get(0);
         else return null;
     }

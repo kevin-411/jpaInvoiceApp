@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@NamedQuery(name="selectInvoicebyInvoiceNo", query = "Select invoice from Invoice invoice where invoice.invoiceNo=:invoiceNo")
 @Table(name = "tble_invoice")
 public class Invoice {
 
