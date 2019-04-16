@@ -1,6 +1,8 @@
 package entities;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,24 +12,29 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private int id;
 
     private String invoiceNo;
     private Date invoiceDate;
-    private Date dueDate;
+    private Date dueDate;/*
+    private String invoiceDateS;*/
 
     @ManyToOne
     private Customer invoicee;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<InvoiceLine> invoiceLines;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getInvoiceeS(){
+        return String.valueOf(invoicee.getCustomerId());
     }
 
     public String getInvoiceNo() {
@@ -42,6 +49,11 @@ public class Invoice {
         return invoiceDate;
     }
 
+    public void setInvoiceDate(String invoiceDate) throws ParseException {
+        Date invoiceDateD = new SimpleDateFormat("DD-MM-YYYY").parse(invoiceDate);
+        this.invoiceDate = invoiceDateD;
+    }
+
     public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
@@ -50,7 +62,12 @@ public class Invoice {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) throws ParseException {
+        Date dueDateD = new SimpleDateFormat("DD-MM-YYYY").parse(dueDate);
+        this.dueDate = dueDateD;
+    }
+
+    public void setDueDate(Date dueDate) throws ParseException {
         this.dueDate = dueDate;
     }
 
@@ -65,6 +82,8 @@ public class Invoice {
     public Set<InvoiceLine> getInvoiceLines() {
         return invoiceLines;
     }
+
+    //public
 
     public void setInvoiceLines(Set<InvoiceLine> invoiceLines) {
         this.invoiceLines = invoiceLines;

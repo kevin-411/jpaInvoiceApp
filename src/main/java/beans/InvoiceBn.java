@@ -1,16 +1,36 @@
 package beans;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import entities.Customer;
 import entities.Invoice;
+import entities.InvoiceLine;
 
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class InvoiceBn extends Bean implements InvoiceInt {
 
 
     @Override
-    public void addInvoice(Invoice invoice) {
+    public Invoice getInvoiceByNumber(int invoiceNumber) {
+        String sqlStatement = "Select invoice from Invoice invoice where invoice.invoiceNo="+invoiceNumber;
+        List<Invoice> invoice = entityManager.createQuery(sqlStatement).getResultList();
+        if(invoice!=null && invoice.size() > 0) return invoice.get(0);
+        else return null;
+    }
+
+    @Override
+    public void addInvoice(Invoice invoice){
+        //Customer customer = entityManager.find(Customer.class, );
+        Set<InvoiceLine> invoiceLineSet = null;
+       // invoiceLineSet.add(entityManager.find(InvoiceLine.class, invoice.getInvoic()));
+
         entityManager.persist(invoice);
     }
 

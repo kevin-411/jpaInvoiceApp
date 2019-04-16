@@ -4,13 +4,19 @@ import com.google.gson.Gson;
 import entities.InvoiceLine;
 
 import javax.ejb.Stateless;
+import javax.persistence.PersistenceException;
 
 @Stateless
 public class InvoiceLineBn extends Bean implements InvoiceLineInt {
 
     @Override
-    public void addInvoiceLine(InvoiceLine invoiceLine) {
-        entityManager.persist(invoiceLine);
+    public InvoiceLine addInvoiceLine(InvoiceLine invoiceLine) {
+        try {
+            entityManager.persist(invoiceLine);
+            return invoiceLine;
+        } catch (PersistenceException e){
+            return null;
+        }
     }
 
     @Override

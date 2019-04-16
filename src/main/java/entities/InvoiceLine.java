@@ -8,7 +8,7 @@ public class InvoiceLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String invoiceLineId;
+    private int invoiceLineId;
 
     private long no;
     private String name;
@@ -16,11 +16,11 @@ public class InvoiceLine {
     private double unitPrice;
     private double total;
 
-    public String getInvoiceLineId() {
+    public int getInvoiceLineId() {
         return invoiceLineId;
     }
 
-    public void setInvoiceLineId(String invoiceLineId) {
+    public void setInvoiceLineId(int invoiceLineId) {
         this.invoiceLineId = invoiceLineId;
     }
 
